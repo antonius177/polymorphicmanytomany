@@ -30,3 +30,33 @@ Route::get('/create', function (){
 	$tag2 = Tag::find(2);
 	$vidios->tags()->save($tag2);
 });
+
+Route::get('/read', function(){
+	$post = Post::findOrFail(1);
+	
+	foreach($post->tags as $tag){
+		echo $tag;
+		echo "<br />";
+		echo $tag->name;
+	}
+});
+Route::get('/update', function(){
+	//$post = Post::findOrFail(1);
+	
+	//foreach($post->tags as $tag){
+		//return $tag->whereName('php')->update(['name'=>'updated php']);
+	//}
+	
+	$post = Post::findOrFail(1);
+	$tag = Tag::find(3);
+	//$post->tags()->save($tag);
+	//$post->tags()->attach($tag);
+	$post->tags()->sync([2]);
+});
+
+Route::get('/delete', function(){
+	$post = Post::find(1);
+	foreach($post->tags as$tag){
+		$tag->whereId(2)->delete();
+	}
+});
